@@ -1,13 +1,14 @@
 package example;
 
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.jms.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 @Singleton
 @Startup
@@ -33,6 +34,7 @@ public class StartUpBean {
         for (int i = 0; i < 10; i++) {
             createQueueProducer();
             createTopicProducer();
+            createTopicProducerByJndi();
             Thread.sleep(1000);
         }
     }
@@ -85,6 +87,43 @@ public class StartUpBean {
             con.close();
 
         } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createTopicProducerByJndi() {
+        System.out.println("StartUpBean.createTopicProducer");
+
+        try {
+            // initialize context
+            Context c = new InitialContext();
+
+            TopicConnectionFactory qcf = (TopicConnectionFactory) c.lookup("jms/TopicConnectionFactory");
+
+            //logger.debug("request queue name :" + requestQueueName);
+            Topic topic = (Topic) c.lookup("jms/HelloTopic");
+
+
+            Connection con = topicConnectionFactory.createConnection();
+            con.start();
+            Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            //cannot get correct topic name.
+            MessageProducer producer = session.createProducer(topic);
+            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+
+            String msg = "Hello Topic By JNDI Startup " + count++;
+
+            System.out.println("send topic msg = " + msg);
+
+            TextMessage message = session.createTextMessage(msg);
+
+            producer.send(message);
+
+            session.close();
+            con.close();
+
+        } catch (JMSException | NamingException e) {
             e.printStackTrace();
         }
     }
