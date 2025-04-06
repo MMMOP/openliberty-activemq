@@ -1,0 +1,16 @@
+services:
+  activemq:
+    image: apache/activemq-classic:5.18.6
+    container_name: activemq
+    environment:
+      #ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT: "true"
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+      ACTIVEMQ_MIN_MEMORY: 512
+      ACTIVEMQ_MAX_MEMORY: 1024
+      TZ: "Thai/Bangkok"
+    #volumes:
+    #  - "./activemq/activemq.xml:/conf/activemq.xml"
+    ports:
+      - "61616:61616" # broker
+      - "8161:8161"   # web    http://localhost:8161/admin (admin:admin)
