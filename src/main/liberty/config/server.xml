@@ -57,22 +57,43 @@
                              password="admin"/>
     </resourceAdapter>
 
-    <connectionManager id="QueueConMgr" minPoolSize="1" maxPoolSize="50"/>
+    <!-- https://openliberty.io/docs/latest/reference/config/connectionManager.html -->
+    <connectionManager id="QueueConMgr" minPoolSize="1" maxPoolSize="50" />
+    <connectionManager id="TopicConMgr" minPoolSize="1" maxPoolSize="50" />
 
-    <!-- กำหนด Connection Factory สำหรับ ActiveMQ -->
+    <!-- setting Connection Factory for ActiveMQ -->
     <jmsQueueConnectionFactory
             id="QueueConnectionFactory"
             jndiName="jms/QueueConnectionFactory" connectionManagerRef="QueueConMgr">
         <properties.activemq />
     </jmsQueueConnectionFactory>
 
+    <jmsTopicConnectionFactory
+            id="TopicConnectionFactory"
+            jndiName="jms/TopicConnectionFactory" connectionManagerRef="TopicConMgr">
+        <properties.activemq />
+    </jmsTopicConnectionFactory>
+
+    <authData id="ActiveMQAuth" user="admin" password="admin"/>
+
     <jmsActivationSpec id="openliberty-activemq/HelloQueueMDB" >
-        <properties.activemq destination="TEST.FOO" destinationType="javax.jms.Queue"/>
+        <properties.activemq
+                destination="TEST.FOO" destinationType="javax.jms.Queue"/>
+    </jmsActivationSpec>
+
+    <jmsActivationSpec id="openliberty-activemq/HelloTopicMDB" >
+        <properties.activemq
+                destination="TEST.TOPIC.FOO" destinationType="javax.jms.Topic"
+                clientId="TEST.TOPIC.FOO.CLIENT.ID"
+        />
     </jmsActivationSpec>
 
     <jmsQueue id="HelloQueue" jndiName="jms/HelloQueue">
         <properties.activemq PhysicalName="TEST.FOO" />
     </jmsQueue>
+    <jmsTopic id="HelloTopic" jndiName="jms/HelloTopic">
+        <properties.activemq PhysicalName="TEST.TOPIC.FOO" />
+    </jmsTopic>
 
     <applicationManager autoExpand="true"/>
     <applicationMonitor updateTrigger="mbean"/>

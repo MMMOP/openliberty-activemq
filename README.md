@@ -1,6 +1,6 @@
 # Open Liberty - JMS & Active MQ
 
-A sample application that uses Open Liberty to connect to ActiveMQ 's queue.
+A sample application that uses Open Liberty to connect to ActiveMQ 's queue and topic.
 
 ## Setup
 

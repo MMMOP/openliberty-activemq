@@ -21,12 +21,20 @@ public class SimpleJMSServlet extends HttpServlet {
     @Resource(lookup = "jms/HelloQueue")
     Queue helloQueue;
 
+    @Resource(lookup = "jms/TopicConnectionFactory")
+    ConnectionFactory topicConnectionFactory;
+
+    @Resource(lookup = "jms/HelloTopic")
+    Topic helloTopic;
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType(MediaType.TEXT_PLAIN);
         String msg = req.getParameter("msg" ) == null? "hello": req.getParameter("msg" );
         try {
             pushMessageToQueue(msg);
+            pushMessageToTopic("topic " + msg);
         } catch (JMSException e) {
             resp.setStatus(502);
             resp.getWriter().println("Failed to Push " + msg + " to queue");
@@ -45,4 +53,14 @@ public class SimpleJMSServlet extends HttpServlet {
         session.close();
         con.close();
     }
+
+    private void pushMessageToTopic(String msg) throws JMSException{
+        Connection con = topicConnectionFactory.createConnection();
+        Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        TextMessage message = session.createTextMessage(msg);
+        session.createProducer(helloTopic).send(message);
+        session.close();
+        con.close();
+    }
+
 }

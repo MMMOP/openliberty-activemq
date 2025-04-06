@@ -1,6 +1,7 @@
 package example;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -9,9 +10,12 @@ import javax.jms.TextMessage;
 
 
 @MessageDriven(
-    mappedName = "HelloQueueMDB"
+    mappedName = "HelloTopicMDB"
+    , activationConfig = {
+       @ActivationConfigProperty(propertyName = "clientId", propertyValue = "TEST.TOPIC.FOO.CLIENT.ID")
+    }
 )
-public class HelloQueueMDB implements MessageListener {
+public class HelloTopicMDB implements MessageListener {
 
     @PostConstruct
     public void init() {
@@ -22,7 +26,7 @@ public class HelloQueueMDB implements MessageListener {
 
         TextMessage msg = (TextMessage) message;
         try {
-            System.out.println("HelloQueueMDB onMessage() >> " + msg.getText());
+            System.out.println("HelloTopicMDB onMessage() >> " + msg.getText());
         } catch (JMSException e) {
             e.printStackTrace();
         }
