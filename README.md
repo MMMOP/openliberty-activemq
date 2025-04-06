@@ -31,3 +31,7 @@ Once the server is running, send a message to the queue:
 ```sh
 curl -X GET -d 'msg=test mq' http://localhost:9080/send
 ```
+
+Monitor Program by [JavaMelody](https://github.com/javamelody/javamelody/wiki/UserGuide)
+
+[http://localhost:9080/monitoring](http://localhost:9080/monitoring)
