@@ -30,6 +30,20 @@
 
     <dependencies>
 
+        <!-- https://github.com/javamelody/javamelody/wiki/UserGuide#dependencies -->
+        <dependency>
+            <groupId>net.bull.javamelody</groupId>
+            <artifactId>javamelody-core</artifactId>
+            <version>1.99.2</version>
+        </dependency>
+
+        <!-- xstream as an option for the xml and json export of javamelody -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.21</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
             <groupId>javax</groupId>
