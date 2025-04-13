@@ -103,4 +103,18 @@
     <!-- SSL Configuration (กรณีที่ต้องการ) -->
     <ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore"/>
 
+
+    <!-- setup SQLite jar file -->
+    <library id="sqliteLib">
+        <fileset dir="${wlp.install.dir}../../../lib" includes="*.jar"/>
+    </library>
+
+    <!-- setup SQLite JDBC driver -->
+    <jdbcDriver id="SQLiteDriver" libraryRef="sqliteLib" javax.sql.DataSource="org.sqlite.SQLiteDataSource" javax.sql.ConnectionPoolDataSource="org.sqlite.javax.SQLiteConnectionPoolDataSource" />
+
+    <!-- setup SQLite datasource -->
+    <dataSource id="SQLiteDS" jdbcDriverRef="SQLiteDriver" jndiName="jdbc/sqlite" type="javax.sql.DataSource">
+        <properties URL="jdbc:sqlite:${wlp.install.dir}../../../database.db" />
+        <connectionManager maxPoolSize="5"/>
+    </dataSource>
 </server>

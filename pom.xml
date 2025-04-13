@@ -30,6 +30,13 @@
 
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.49.1.0</version>
+        </dependency>
+
         <!-- https://github.com/javamelody/javamelody/wiki/UserGuide#dependencies -->
         <dependency>
             <groupId>net.bull.javamelody</groupId>
