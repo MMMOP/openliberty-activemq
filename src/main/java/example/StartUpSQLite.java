@@ -22,9 +22,9 @@ public class StartUpSQLite {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT 'temp1' as name " +
                                                     "UNION ALL " +
-                                                    "SELECT 'temp2'" +
+                                                    "SELECT 'temp2' " +
                                                     "UNION ALL " +
-                                                    "SELECT 'temp3'")) {
+                                                    "SELECT 'temp3' ")) {
 
             while (rs.next()) {
                 System.out.println("User: " + rs.getString( "name"));
