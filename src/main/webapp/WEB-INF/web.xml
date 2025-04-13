@@ -13,6 +13,12 @@
 	<filter>
 		<filter-name>javamelody</filter-name>
 		<filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+		<!-- https://github.com/javamelody/javamelody/wiki/Parameters -->
+		<!-- disable monitor database -->
+		<init-param>
+			<param-name>no-database</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>javamelody</filter-name>
