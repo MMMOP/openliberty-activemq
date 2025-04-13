@@ -35,3 +35,10 @@ curl -X GET -d 'msg=test mq' http://localhost:9080/send
 Monitor Program by [JavaMelody](https://github.com/javamelody/javamelody/wiki/UserGuide)
 
 [http://localhost:9080/monitoring](http://localhost:9080/monitoring)
+
+Install Oracle Database ([gvenzl/oracle-free](https://hub.docker.com/r/gvenzl/oracle-free))
+
+```sh
+docker run -d -p 1521:1521 -e ORACLE_RANDOM_PASSWORD=y -e APP_USER=admin -e APP_USER_PASSWORD=admin gvenzl/oracle-free
+```
+

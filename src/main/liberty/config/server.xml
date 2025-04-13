@@ -103,4 +103,18 @@
     <!-- SSL Configuration (กรณีที่ต้องการ) -->
     <ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore"/>
 
+    <!-- setup Oracle jar file -->
+    <library id="oracleLib">
+        <fileset dir="${wlp.install.dir}../../../lib" includes="*.jar"/>
+    </library>
+
+    <!-- setup Oracle datasource -->
+    <dataSource id="oracle" jndiName="jdbc/oracle" statementCacheSize="150" type="javax.sql.XADataSource">
+        <jdbcDriver libraryRef="oracleLib"/>
+        <properties.oracle URL="jdbc:oracle:thin:@localhost:1521/FREEPDB1"
+                           user="admin"
+                           password="admin"/>
+
+        <connectionManager maxPoolSize="100" minPoolSize="1" connectionTimeout="180s" maxIdleTime="1800s" agedTimeout="0" purgePolicy="EntirePool"/>
+    </dataSource>
 </server>
